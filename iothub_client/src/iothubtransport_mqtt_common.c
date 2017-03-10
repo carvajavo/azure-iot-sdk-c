@@ -185,6 +185,7 @@ typedef struct MQTTTRANSPORT_HANDLE_DATA_TAG
     // Connection state control
     bool isRegistered;
     bool isConnected;
+    bool isConnectionErrorReported;
     bool isDestroyCalled;
     bool device_twin_get_sent;
     bool isRecoverableError;
@@ -1454,6 +1455,7 @@ static void mqtt_error_callback(MQTT_CLIENT_HANDLE handle, MQTT_CLIENT_EVENT_ERR
                 LogError("INTERNAL ERROR: unexpected error value received %s", ENUM_TO_STRING(MQTT_CLIENT_EVENT_ERROR, error));
             }
         }
+        transport_data->isConnectionErrorReported = true;
         transport_data->isConnected = false;
         transport_data->currPacketState = PACKET_TYPE_ERROR;
         transport_data->device_twin_get_sent = false;
@@ -1706,7 +1708,14 @@ static int InitializeConnection(PMQTTTRANSPORT_HANDLE_DATA transport_data)
             }
             else
             {
+                transport_data->isConnectionErrorReported = false;
+
                 if (SendMqttConnectMsg(transport_data) != 0)
+                {
+                    transport_data->connectFailCount++;
+                    result = __FAILURE__;
+                }
+                else if (transport_data->isConnectionErrorReported)
                 {
                     transport_data->connectFailCount++;
                     result = __FAILURE__;
@@ -1938,6 +1947,7 @@ static PMQTTTRANSPORT_HANDLE_DATA InitializeTransportHandleData(const IOTHUB_CLI
                     state->isDestroyCalled = false;
                     state->isRegistered = false;
                     state->isConnected = false;
+                    state->isConnectionErrorReported = false;
                     state->device_twin_get_sent = false;
                     state->isRecoverableError = true;
                     state->packetId = 1;
