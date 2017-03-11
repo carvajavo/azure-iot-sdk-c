@@ -286,7 +286,7 @@ extern IOTHUB_CLIENT_RESULT IoTHubClient_LL_SetMessageCallback(IOTHUB_CLIENT_LL_
 
 **SRS_IOTHUBCLIENT_LL_10_010: [** If parameter `messageCallback` is `NULL` and the _SetMessageCallback had not been called to subscribe for messages, then `IoTHubClient_LL_SetMessageCallback` shall fail and return `IOTHUB_CLIENT_ERROR`.** ] **
 
-**SRS_IOTHUBCLIENT_LL_10_011: [** If parameter `messageCallback` is `non-NULL` and the `_SetMessageCallbackEx` had been used to susbscribe for messages, then `IoTHubClient_LL_SetMessageCallback` shall fail and return `IOTHUB_CLIENT_ERROR`.** ]** 
+**SRS_IOTHUBCLIENT_LL_10_011: [** If parameter `messageCallback` is `non-NULL` and the `_SetMessageCallback_Ex` had been used to susbscribe for messages, then `IoTHubClient_LL_SetMessageCallback` shall fail and return `IOTHUB_CLIENT_ERROR`.** ]** 
 
 
 ## IoTHubClient_LL_DoWork
@@ -344,25 +344,25 @@ This function is only called by the lower layers upon receiving a message from I
 
 **SRS_IOTHUBCLIENT_LL_10_009: [** If `messageCallbackType` is `ASYNC` then `IoTHubClient_LL_MessageCallback` shall return what `messageCallbacEx` returns.** ]**
 
-## IoTHubClient_LL_SetMessageCallbackEx
+## IoTHubClient_LL_SetMessageCallback_Ex
 
 ```c
-extern IOTHUB_CLIENT_RESULT IoTHubClient_LL_SetMessageCallbackEx(IOTHUB_CLIENT_LL_HANDLE iotHubClientHandle, IOTHUB_CLIENT_MESSAGE_CALLBACK_ASYNC_EX messageCallback, void* userContextCallback);
+extern IOTHUB_CLIENT_RESULT IoTHubClient_LL_SetMessageCallback_Ex(IOTHUB_CLIENT_LL_HANDLE iotHubClientHandle, IOTHUB_CLIENT_MESSAGE_CALLBACK_ASYNC_EX messageCallback, void* userContextCallback);
 ```
 
-**SRS_IOTHUBCLIENT_LL_10_021: [** `IoTHubClient_LL_SetMessageCallbackEx` shall fail and return `IOTHUB_CLIENT_INVALID_ARG` if parameter `iotHubClientHandle` is `NULL`.** ]**
+**SRS_IOTHUBCLIENT_LL_10_021: [** `IoTHubClient_LL_SetMessageCallback_Ex` shall fail and return `IOTHUB_CLIENT_INVALID_ARG` if parameter `iotHubClientHandle` is `NULL`.** ]**
 
-**SRS_IOTHUBCLIENT_LL_10_018: [** If parameter `messageCallback` is `NULL` and `IoTHubClient_LL_SetMessageCallbackEx` had not been used to subscribe for messages, then `IoTHubClient_LL_SetMessageCallbackEx` shall fail and return `IOTHUB_CLIENT_ERROR`.** ]**
+**SRS_IOTHUBCLIENT_LL_10_018: [** If parameter `messageCallback` is `NULL` and `IoTHubClient_LL_SetMessageCallback_Ex` had not been used to subscribe for messages, then `IoTHubClient_LL_SetMessageCallback_Ex` shall fail and return `IOTHUB_CLIENT_ERROR`.** ]**
 
-**SRS_IOTHUBCLIENT_LL_10_019: [** If parameter `messageCallback` is `NULL` and `IoTHubClient_LL_SetMessageCallback` had been used to subscribe for messages, then `IoTHubClient_LL_SetMessageCallbackEx` shall fail and return `IOTHUB_CLIENT_ERROR`.** ]**
+**SRS_IOTHUBCLIENT_LL_10_019: [** If parameter `messageCallback` is `NULL` and `IoTHubClient_LL_SetMessageCallback` had been used to subscribe for messages, then `IoTHubClient_LL_SetMessageCallback_Ex` shall fail and return `IOTHUB_CLIENT_ERROR`.** ]**
 
-**SRS_IOTHUBCLIENT_LL_10_023: [** If parameter `messageCallback` is `NULL` then `IoTHubClient_LL_SetMessageCallbackEx` shall call the underlying layer's `_Unsubscribe` function and return `IOTHUB_CLIENT_OK`.** ]** 
+**SRS_IOTHUBCLIENT_LL_10_023: [** If parameter `messageCallback` is `NULL` then `IoTHubClient_LL_SetMessageCallback_Ex` shall call the underlying layer's `_Unsubscribe` function and return `IOTHUB_CLIENT_OK`.** ]** 
 
-**SRS_IOTHUBCLIENT_LL_10_020: [** If parameter `messageCallback` is `non-NULL`, and `IoTHubClient_LL_SetMessageCallback` had been used to subscribe for messages, then `IoTHubClient_LL_SetMessageCallbackEx` shall fail and return `IOTHUB_CLIENT_ERROR`.** ]**
+**SRS_IOTHUBCLIENT_LL_10_020: [** If parameter `messageCallback` is `non-NULL`, and `IoTHubClient_LL_SetMessageCallback` had been used to subscribe for messages, then `IoTHubClient_LL_SetMessageCallback_Ex` shall fail and return `IOTHUB_CLIENT_ERROR`.** ]**
 
-**SRS_IOTHUBCLIENT_LL_10_024: [** If parameter `messageCallback` is `non-NULL` then `IoTHubClient_LL_SetMessageCallbackEx` shall call the underlying layer's _Subscribe function.** ]**
+**SRS_IOTHUBCLIENT_LL_10_024: [** If parameter `messageCallback` is `non-NULL` then `IoTHubClient_LL_SetMessageCallback_Ex` shall call the underlying layer's _Subscribe function.** ]**
 
-**SRS_IOTHUBCLIENT_LL_10_025: [** If the underlying layer's _Subscribe function fails, then `IoTHubClient_LL_SetMessageCallbackEx` shall fail and return `IOTHUB_CLIENT_ERROR`. Otherwise `IoTHubClient_LL_SetMessageCallbackEx` shall succeed and return `IOTHUB_CLIENT_OK`.** ]**
+**SRS_IOTHUBCLIENT_LL_10_025: [** If the underlying layer's _Subscribe function fails, then `IoTHubClient_LL_SetMessageCallback_Ex` shall fail and return `IOTHUB_CLIENT_ERROR`. Otherwise `IoTHubClient_LL_SetMessageCallback_Ex` shall succeed and return `IOTHUB_CLIENT_OK`.** ]**
 
 
 ## IoTHubClient_LL_SendMessageDisposition
