@@ -7,12 +7,13 @@
 #include "azure_c_shared_utility/platform.h"
 #include "azure_c_shared_utility/threadapi.h"
 #include "azure_c_shared_utility/crt_abstractions.h"
+#include "azure_c_shared_utility/shared_util_options.h"
 #include "iothub_client.h"
 #include "iothub_message.h"
 #include "iothubtransportamqp_websockets.h"
 #include "../../../certs/certs.h"
 
-static const char* connectionString = "[device connection string]";
+static const char* connectionString = "HostName=mqtt-tls-test.private.azure-devices-int.net;DeviceId=testDevice;SharedAccessKey=Ydmbjj0cQDL7Fnrv+8O3zRK/KbExQuYL6wGtv7zPLBM=";
 static int callbackCounter;
 
 
@@ -138,11 +139,26 @@ void iothub_client_sample_amqp_websockets_run(void)
     }
     else
     {
-        // For mbed add the certificate information
+		bool traceOn = true;
+        HTTP_PROXY_OPTIONS http_proxy_options;
+
+		IoTHubClient_SetOption(iotHubClientHandle, "logtrace", &traceOn);
+		
+		// For mbed add the certificate information
         if (IoTHubClient_SetOption(iotHubClientHandle, "TrustedCerts", certificates) != IOTHUB_CLIENT_OK)
         {
             printf("failure to set option \"TrustedCerts\"\r\n");
         }
+
+        http_proxy_options.host_address = "localhost";
+        http_proxy_options.port = 8888;
+        http_proxy_options.username = NULL;
+        http_proxy_options.password = NULL;
+
+/*        if (IoTHubClient_SetOption(iotHubClientHandle, OPTION_HTTP_PROXY, &http_proxy_options) != IOTHUB_CLIENT_OK)
+        {
+            printf("failure to set proxy option\r\n");
+        }*/
 
         /* Setting Message call back, so we can receive Commands. */
         if (IoTHubClient_SetMessageCallback(iotHubClientHandle, ReceiveMessageCallback, &receiveContext) != IOTHUB_CLIENT_OK)
